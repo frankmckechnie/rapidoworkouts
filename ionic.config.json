@@ -1,0 +1,7 @@
+{
+  "name": "workouts",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
