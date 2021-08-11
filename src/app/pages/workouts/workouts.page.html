@@ -1,17 +1,41 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title>RapidoWorkouts</ion-title>
 
-    <ion-title slot="center">My Navigation Bar</ion-title>
+    <ion-chip slot="end">
+      <ion-label>Frank</ion-label>
+      <ion-avatar [routerLink]="['/account']"
+      >
+        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+      </ion-avatar>
+    </ion-chip>
   </ion-toolbar>
 </ion-header>
 
+<ion-content fullscreen>
+  <ion-list>
 
-<ion-content>
+    <ion-list-header>
+      Your workouts
+    </ion-list-header>
 
-  <ion-avatar>
-    <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-  </ion-avatar>
+    <ion-item  *ngFor="let workout of workouts;" button detail="false" lines="none">
 
+      <ion-avatar slot="start">
+        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ workout.name }}</h2>
+        <p>{{ workout.description }}</p>
+      </ion-label>
 
+      <ion-icon button name="ellipsis-vertical"></ion-icon>
 
+    </ion-item>
+
+  </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-button (click)="showCreateOptions()" class="ion-margin" expand="block">Add</ion-button>
+</ion-footer>
