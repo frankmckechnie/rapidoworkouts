@@ -1,30 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Workout } from 'src/app/config/Workout';
+import { Days } from 'src/app/config/Days.enum';
+import { ExerciseTypes } from 'src/app/config/ExerciseTypes.enum';
+import { Workout, Routine } from 'src/app/config/Models';
+import { ExampleRoutine } from 'src/app/stubs/routine';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WorkoutService {
 
-  private data: Workout[] = [
-    {
-      uid: 'saddasd-asdasd-asd',
-      name: 'Week 1',
-      description: 'Test description'
-    },
-    {
-      uid: 'saddasd-ascdcsdc-asd',
-      name: 'Week 2',
-      description: 'Test description'
-    }
-  ];
+  private data: Routine[] = [ExampleRoutine];
 
-  constructor() {
+  constructor() {}
 
-  }
-
-  public getWorkouts(): Workout[]{
+  public getMyWorkouts(): Routine[] {
     return this.data;
   }
-
 }
