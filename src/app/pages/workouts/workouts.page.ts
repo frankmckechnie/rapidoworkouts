@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Workout } from 'src/app/config/Workout';
+import { Workout, Routine } from 'src/app/config/Models';
 import { WorkoutService } from 'src/app/services/workout/workout.service';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, PopoverController } from '@ionic/angular';
+import { WorkoutActionsComponent } from '../../components/workout-actions/workout-actions.component';
 
 @Component({
   selector: 'app-workouts',
@@ -12,17 +13,34 @@ import { ActionSheetController } from '@ionic/angular';
 
 export class WorkoutsPage implements OnInit {
 
-  public workouts: Workout[];
+  public routines: Routine[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private workoutService: WorkoutService,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    public popoverController: PopoverController
   ) {}
 
   ngOnInit() {
-    this.workouts = this.workoutService.getWorkouts();
+    this.routines = this.workoutService.getMyWorkouts();
+  }
+
+
+  async showWorkoutActions(ev: any, routine: Routine) {
+    const popover = await this.popoverController.create({
+      component: WorkoutActionsComponent,
+      componentProps: routine,
+      cssClass: 'my-custom-class',
+      event: ev,
+      translucent: true
+    });
+
+    await popover.present();
+
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   async showCreateOptions() {
