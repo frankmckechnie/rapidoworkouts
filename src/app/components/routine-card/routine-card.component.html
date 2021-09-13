@@ -1,30 +1,22 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>View</ion-title>
-    <ion-buttons slot="primary">
-      <ion-button shape="round"  fill="outline">
-        Edit
-        <ion-icon slot="end" name="create"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
+<ion-card detail="false" lines="none">
 
   <ion-item lines="none">
     <ion-icon color="success" name="radio-button-on-outline" class="ion-padding-end"></ion-icon>
     <ion-label>{{ routine.name }}</ion-label>
+    <ion-icon slot="end" (click)="showWorkoutActions($event, routine)" button name="ellipsis-vertical"></ion-icon>
   </ion-item>
+    
+  <ion-segment *ngIf="routine.weeks.length !> 1" [(ngModel)]="currentWeek">
+    <ion-segment-button *ngFor="let week of routine.weeks;" [value]="week.name">
+      <ion-label>{{ week.name }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
   <ng-container *ngFor="let week of routine.weeks;">
-    <ion-list>
+    <ion-list *ngIf="currentWeek === week.name">
 
       <ion-list-header>
-        <ion-label>{{ week.name }}</ion-label>
+        <ion-label>Daily workouts</ion-label>
       </ion-list-header>
 
       <ion-item *ngFor="let workout of week.workouts;" button detail="false" lines="none">
@@ -40,4 +32,9 @@
   </ng-container>
 
 
-</ion-content>
+  <ion-card-content>
+
+
+  </ion-card-content>
+
+</ion-card>

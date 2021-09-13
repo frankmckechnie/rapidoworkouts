@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {PopoverController} from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-workout-actions',
@@ -7,8 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorkoutActionsComponent implements OnInit {
 
-  constructor() { }
+  @Input() uid;
 
-  ngOnInit() {}
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    private popover: PopoverController,
+    public router: Router) { }
+
+  ngOnInit() {
+  }
+
+  /**
+   * view the directory
+   *
+   **/
+  public async gotTo(route: string) {
+    await this.popover.dismiss();
+    this.router.navigate([`${route}/${this.uid}`], { replaceUrl: false});
+  }
 
 }
