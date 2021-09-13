@@ -15,32 +15,25 @@ export class WorkoutsPage implements OnInit {
 
   public routines: Routine[];
 
+  public currentRoutine: Routine;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private workoutService: WorkoutService,
-    public actionSheetController: ActionSheetController,
-    public popoverController: PopoverController
+    private actionSheetController: ActionSheetController,
   ) {}
 
   ngOnInit() {
-    this.routines = this.workoutService.getMyWorkouts();
+    this.currentRoutine = this.workoutService.getMyRoutine();
+    this.routines = this.workoutService.getMyRoutines();
   }
 
-
-  async showWorkoutActions(ev: any, routine: Routine) {
-    const popover = await this.popoverController.create({
-      component: WorkoutActionsComponent,
-      componentProps: routine,
-      cssClass: 'my-custom-class',
-      event: ev,
-      translucent: true
-    });
-
-    await popover.present();
-
-    const { role } = await popover.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
+  /**
+   * view the directory
+   */
+  public view(id: number) {
+    this.router.navigate([`view/${id}`], { relativeTo: this.activatedRoute });
   }
 
   async showCreateOptions() {
